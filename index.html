@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>galaxy simulation</title>
+    <link rel="stylesheet" type="text/css" href="format.css" title="Default" />
+    <!--<link rel="shortcut icon" href="images/graph.ico" type="image/x-icon" />
+    <link rel="icon" href="images/graph.ico" type="image/x-icon" />-->
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <center>
+                    <div><h3><b>Galaxy Simulation™</b></h3></div>
+                </center>
+                <canvas id="canvas" width="650" height="650" style="border: 5px solid #33a07e" />
+            </td>
+            <td style="text-align: center; width: 300px; padding: 20px;">
+                <button class="a" onclick="newSim()">start</button>
+                <h3>objects: <span id="scale">50</span></h3>
+                <input type="range" min="10" max="150" value="50" id="scalerange" onchange="scaleUpdate()">
+                <br />
+                <label for="expand">expanding universe model:</label><input type="checkbox" id="expand" name="expand" />
+            </td>
+        </tr>
+    </table>
+
+    <script language="javascript" type="text/javascript">
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        var simulating = false;
+        var objects = 50;
+        var objref = [];
+        //var colourbounds = [0, 3, 6, 9, 20, 50, 80];
+        var gravconst = 0.2;
+        var massdimensions = 8;
+
+        function newSim() {
+            if (!simulating) simulating = true;
+            objref = [];
+            for (let i = 0; i < objects; i++) {
+                //x, y, xv, yv, mass-type, mass-ratio
+                //objref.push([Math.random() * canvas.width, Math.random() * canvas.width, Math.random() * 0.5, Math.random() * 0.5, (Math.round(Math.random() * 0.6) * 9) + 1, Math.random() * 10]);
+
+                objref.push([Math.random() * canvas.width, Math.random() * canvas.width, Math.random() * 0.5, Math.random() * 0.5, (Math.round(Math.random() * 0.6) * 9) + 1]);
+            }
+        }
+
+        setInterval(function () {
+            if (simulating) {
+                for (let host = 0; host < objref.length; host++) {
+                    xchange = 0;
+                    ychange = 0;
+
+                    for (let other = 0; other < objref.length; other++) {
+                        if (host != other) {
+                            dist = Math.sqrt(((objref[host][0] - objref[other][0]) ** 2) + ((objref[host][1] - objref[other][1]) ** 2));
+                            force = gravconst * ((objref[other][4] * objref[host][4]) / (dist ** 2));
+                            if (force >= 0.01) force = 0.01;
+                            xchange += force * (objref[other][0] - objref[host][0]);
+                            ychange += force * (objref[other][1] - objref[host][1]);
+                        }
+                    }
+                    xacc = xchange / objref[host][4];
+                    yacc = ychange / objref[host][4];
+
+                    objref[host][2] += xacc;
+                    objref[host][3] += yacc;
+                    objref[host][0] += objref[host][2];
+                    objref[host][1] += objref[host][3];
+
+                    /*colourproxy = 4;
+                    for (let i = 1; i < colourbounds.length; i++) {
+                        if (objref[host][4] * objref[host][5] <= colourbounds[i]) {
+                            colourproxy = colourbounds.length - i;
+                            break;
+                        }
+                    }*/
+                    var colourproxy = 0;
+                    if (objref[host][4] == 10) colourproxy = 1;
+                    printImg(colourproxy, objref[host][0], objref[host][1]);
+                }
+            }
+        }, 75);
+
+        setInterval(function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.width);
+        }, 150);
+
+        function printImg(colour, xplace, yplace) {
+            let newImage = new Image();
+            newImage.src = "celestialb" + colour + ".png";
+            newImage.onload = () => {
+                ctx.drawImage(newImage, Math.floor(xplace - (massdimensions / 2)), Math.floor(yplace - (massdimensions / 2)), massdimensions, massdimensions);
+            }
+            return;
+        }
+
+        //audio
+        var channelmax = 3;
+        audiochannels = new Array();
+        for (i = 0; i < channelmax; i++) {
+            audiochannels[i] = new Array();
+            audiochannels[i]['channel'] = new Audio();
+            audiochannels[i]['finished'] = -1; // expected end time for channel
+        }
+        function playSound(s) {
+            for (i = 0; i < audiochannels.length; i++) {
+                thistime = new Date();
+                if (audiochannels[i]['finished'] < thistime.getTime()) {
+                    audiochannels[i]['finished'] = thistime.getTime() + document.getElementById(s).duration * 1000;
+                    audiochannels[i]['channel'].src = document.getElementById(s).src;
+                    audiochannels[i]['channel'].load();
+                    audiochannels[i]['channel'].play();
+                    break;
+                }
+            }
+        }
+
+        function scaleUpdate() {
+            scalesample = document.getElementById("scalerange").value;
+            objects = scalesample;
+            document.getElementById("scale").innerHTML = scalesample.toString();
+        }
+
+        function remap(value, a1, a2, b1, b2) {
+            return (value - a1) / (a2 - a1) * (b2 - b1) + b1;
+        }
+        function distance(x1, y1, x2, y2) {
+            return 
+        }
+
+    </script>
+    <noscript>
+        <p>enabling javascript is required to run the simulation</p>
+    </noscript>
+</body>
+</html>

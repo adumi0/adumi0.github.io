@@ -1,0 +1,52 @@
+﻿@font-face {
+    font-family: rb;
+    src: url('roboto.ttf');
+}
+
+body {
+    font-family: rb;
+}
+h3 {
+    margin: 10px;
+}
+h5 {
+    margin: 10px;
+}
+
+canvas {
+    background-color: black;
+}
+
+div {
+    background: linear-gradient(#ffffff, #ebebeb);
+    border: 4px solid #000000;
+    text-align: center;
+    width: 300px;
+    margin: 20px;
+}
+
+input {
+    width: 375px;
+    accent-color: #33a07e;
+}
+
+.a {
+    background: linear-gradient(#ffffff, #ebebeb);
+    border-radius: 4px;
+    border: 4px solid #000000;
+    padding: 10px;
+    margin: 25px;
+    width: 125px;
+    position: relative;
+    vertical-align: middle;
+}
+
+    .a:enabled:hover {
+        color: black;
+        border: 4px solid #33a07e;
+        box-shadow: 0 0 6px #33a07e;
+    }
+
+audio, video {
+    display: none;
+}
