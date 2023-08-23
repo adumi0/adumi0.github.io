@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <title>galaxy simulation</title>
     <link rel="stylesheet" type="text/css" href="format.css" title="Default" />
-    <link rel="shortcut icon" href="celestialb0.ico" type="image/x-icon" />
-    <link rel="icon" href="celestialb0.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/celestialb0.ico" type="image/x-icon" />
+    <link rel="icon" href="img/celestialb0.ico" type="image/x-icon" />
 </head>
 <body>
     <table>
@@ -85,15 +85,15 @@
                     printImg(colourproxy, objref[host][0], objref[host][1]);
                 }
             }
-        }, 75);
+        }, 90);
 
         setInterval(function () {
             ctx.clearRect(0, 0, canvas.width, canvas.width);
-        }, 150);
+        }, 180);
 
         function printImg(colour, xplace, yplace) {
             let newImage = new Image();
-            newImage.src = "celestialb" + colour + ".png";
+            newImage.src = "img/celestialb" + colour + ".png";
             newImage.onload = () => {
                 ctx.drawImage(newImage, Math.floor(xplace - (massdimensions / 2)), Math.floor(yplace - (massdimensions / 2)), massdimensions, massdimensions);
             }
