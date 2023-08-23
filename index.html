@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <title>galaxy simulation</title>
     <link rel="stylesheet" type="text/css" href="format.css" title="Default" />
-    <!--<link rel="shortcut icon" href="images/graph.ico" type="image/x-icon" />
-    <link rel="icon" href="images/graph.ico" type="image/x-icon" />-->
+    <link rel="shortcut icon" href="images/celestialb0.ico" type="image/x-icon" />
+    <link rel="icon" href="images/celestialb0.ico" type="image/x-icon" />
 </head>
 <body>
     <table>
@@ -21,8 +21,10 @@
                 <button class="a" onclick="newSim()">start</button>
                 <h3>objects: <span id="scale">50</span></h3>
                 <input type="range" min="10" max="150" value="50" id="scalerange" onchange="scaleUpdate()">
+                <h5 style="color: darkred">high object counts may cause the canvas to flicker on low-end browsers</h5>
                 <br />
-                <label for="expand">expanding universe model:</label><input type="checkbox" id="expand" name="expand" />
+                <br />
+                <label for="expand">expanding universe model:</label><input type="checkbox" id="expand" />
             </td>
         </tr>
     </table>
